@@ -1,26 +1,559 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Austin Dell'Abate | Texas Mortgage Solutions</title>
+  <meta name="description" content="With 22 years of high-performance lending experience, Austin Dell'Abate delivers expert residential and commercial mortgage solutions in Texas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    :root {
+      --bg: #ffffff;
+      --fg: #2d3748;
+      --primary: #c8922a;
+      --primary-light: #d4a83e;
+      --primary-fg: #ffffff;
+      --muted: #f1f3f5;
+      --muted-fg: #6b7a8d;
+      --border: #e2e8f0;
+      --card: #ffffff;
+      --card-fg: #2d3748;
+      --navy: #1e2a3a;
+      --navy-light: #2a3a4e;
+      --hero-fg: #ffffff;
+      --hero-muted: #a0aec0;
+      --gold: #c8922a;
+      --gold-light: #d4a83e;
+      --stat-bg: #283548;
+      --destructive: #e53e3e;
+      --radius: 0.75rem;
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border-radius: var(--radius); font-weight: 600; font-size: 0.9rem; font-family: var(--font-body); cursor: pointer; border: none; transition: background 0.2s, transform 0.15s; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--primary); color: var(--primary-fg); }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-outline { background: transparent; color: var(--hero-fg); border: 1px solid var(--hero-muted); }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); }
+    .btn-sm { padding: 0.45rem 1rem; font-size: 0.82rem; }
+
+    .badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 500; padding: 0.35rem 1rem; border-radius: 9999px; }
+    .badge-gold { background: rgba(200,146,42,0.18); color: var(--gold-light); }
+    .badge-primary { background: rgba(200,146,42,0.1); color: var(--primary); }
+
+    .section-label { text-align: center; margin-bottom: 0.75rem; }
+    .section-title { text-align: center; font-size: 2rem; font-weight: 700; color: var(--fg); }
+    .section-sub { text-align: center; color: var(--muted-fg); margin-top: 0.75rem; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 0.95rem; }
+
+    /* NAVBAR */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+    .navbar-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .navbar-brand { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; }
+    .navbar-brand small { display: block; font-family: var(--font-body); font-size: 0.7rem; color: var(--muted-fg); font-weight: 400; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--muted-fg); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-phone { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--muted-fg); }
+    .nav-phone:hover { color: var(--fg); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .hamburger svg { width: 24px; height: 24px; stroke: var(--fg); }
+    .mobile-menu { display: none; background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a { display: block; padding: 0.5rem 0; font-size: 0.9rem; color: var(--muted-fg); }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: block; }
+    }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding-top: 64px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: rgba(30,42,58,0.87); }
+    .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding: 5rem 0; }
+    .hero-text h1 { font-size: 3rem; font-weight: 700; color: var(--hero-fg); line-height: 1.15; margin-bottom: 1.5rem; }
+    .hero-text h1 .gold { color: var(--gold); }
+    .hero-text p { color: var(--hero-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; max-width: 540px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+    .profile-card { background: var(--card); border-radius: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,0.25); padding: 2rem; text-align: center; max-width: 360px; margin-left: auto; }
+    .profile-card img { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1rem; object-fit: cover; border: 4px solid var(--muted); }
+    .profile-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--card-fg); }
+    .profile-card .subtitle { font-size: 0.82rem; color: var(--muted-fg); margin-top: 0.25rem; }
+    .profile-card .nmls { font-size: 0.75rem; color: var(--muted-fg); font-weight: 500; margin-top: 0.75rem; }
+    .profile-links { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .profile-links a { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.85rem; color: var(--card-fg); transition: color 0.2s; }
+    .profile-links a:hover { color: var(--primary); }
+    .profile-links svg { width: 16px; height: 16px; color: var(--primary); }
+    .profile-footer { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .profile-footer .label { font-size: 0.72rem; color: var(--muted-fg); }
+    .profile-footer .heroes-badge { font-size: 0.85rem; font-weight: 600; color: var(--destructive); margin-top: 0.25rem; }
+
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-text h1 { font-size: 2.2rem; }
+      .hero-text p { margin-left: auto; margin-right: auto; }
+      .hero-buttons { justify-content: center; }
+      .profile-card { margin: 0 auto; }
+    }
+
+    /* STATS */
+    .stats { position: relative; z-index: 3; margin-top: -0.5rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .stat-card { background: var(--stat-bg); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+    .stat-card .value { font-size: 1.75rem; font-weight: 700; color: var(--gold); font-family: var(--font-heading); }
+    .stat-card .label { font-size: 0.82rem; color: var(--hero-muted); margin-top: 0.25rem; }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* SERVICES */
+    .services { padding: 5rem 0; background: var(--muted); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: box-shadow 0.2s; }
+    .service-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .service-icon { width: 48px; height: 48px; border-radius: 0.5rem; background: rgba(200,146,42,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .service-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--card-fg); margin-bottom: 0.5rem; }
+    .service-card p { font-size: 0.85rem; color: var(--muted-fg); margin-bottom: 1rem; line-height: 1.6; }
+    .service-card li { font-size: 0.82rem; color: var(--muted-fg); padding: 0.3rem 0; display: flex; align-items: center; gap: 0.5rem; }
+    .service-card li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); flex-shrink: 0; }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* WHY CHOOSE ME */
+    .why { padding: 5rem 0; }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .why-card { text-align: center; padding: 1.5rem; }
+    .why-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(200,146,42,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .why-icon svg { width: 28px; height: 28px; color: var(--primary); }
+    .why-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--fg); margin-bottom: 0.5rem; }
+    .why-card p { font-size: 0.85rem; color: var(--muted-fg); line-height: 1.6; }
+    @media (max-width: 768px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .why-grid { grid-template-columns: 1fr; } }
+
+    /* HEROES */
+    .heroes { padding: 5rem 0; background: var(--navy); color: var(--hero-fg); }
+    .heroes .section-title { color: var(--hero-fg); }
+    .heroes .section-sub { color: var(--hero-muted); }
+    .heroes-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem; }
+    .heroes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .hero-type-card { background: var(--navy-light); border-radius: var(--radius); padding: 1rem; text-align: center; }
+    .hero-type-card svg { width: 24px; height: 24px; color: var(--gold); margin: 0 auto 0.5rem; display: block; }
+    .hero-type-card p { font-size: 0.75rem; font-weight: 500; color: var(--hero-muted); }
+    .save-box { background: rgba(200,146,42,0.15); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+    .save-box .amount { font-size: 2rem; font-weight: 700; color: var(--gold); font-family: var(--font-heading); }
+    .save-box p { font-size: 0.85rem; color: var(--hero-muted); margin-top: 0.25rem; }
+    .heroes-image img { border-radius: 1rem; width: 100%; object-fit: cover; }
+    .hero-benefits { background: var(--navy-light); border-radius: var(--radius); padding: 1rem; text-align: center; margin-top: 1rem; }
+    .hero-benefits .title { font-size: 0.85rem; font-weight: 600; }
+    .hero-benefits .sub { font-size: 0.75rem; color: var(--hero-muted); margin-top: 0.25rem; }
+    @media (max-width: 768px) {
+      .heroes-layout { grid-template-columns: 1fr; }
+      .heroes-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* TESTIMONIALS CAROUSEL */
+    .testimonials { padding: 5rem 0; }
+    .carousel-wrapper { position: relative; margin-top: 3rem; overflow: hidden; }
+    .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .carousel-slide { min-width: 100%; padding: 0 1rem; }
+    .carousel-slide-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .testimonial-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .testimonial-card .type-badge { display: inline-block; font-size: 0.72rem; font-weight: 500; background: rgba(200,146,42,0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 9999px; margin-bottom: 1rem; }
+    .stars { display: flex; gap: 2px; margin-bottom: 0.75rem; }
+    .stars svg { width: 16px; height: 16px; fill: var(--gold); color: var(--gold); }
+    .testimonial-card blockquote { font-size: 0.85rem; color: var(--muted-fg); line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
+    .testimonial-footer { border-top: 1px solid var(--border); padding-top: 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .testimonial-footer .name { font-size: 0.85rem; font-weight: 600; color: var(--card-fg); }
+    .testimonial-footer .loc { font-size: 0.72rem; color: var(--muted-fg); }
+    .testimonial-footer .time { font-size: 0.72rem; color: var(--muted-fg); }
+
+    .carousel-controls { display: flex; justify-content: center; gap: 0.75rem; margin-top: 2rem; align-items: center; }
+    .carousel-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s; }
+    .carousel-btn:hover { background: var(--muted); border-color: var(--primary); }
+    .carousel-btn svg { width: 18px; height: 18px; color: var(--fg); }
+    .carousel-dots { display: flex; gap: 0.5rem; }
+    .carousel-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; transition: background 0.2s; }
+    .carousel-dot.active { background: var(--primary); }
+
+    @media (max-width: 900px) {
+      .carousel-slide-inner { grid-template-columns: 1fr; max-width: 500px; }
+      .carousel-slide-inner .testimonial-card:nth-child(n+2) { display: none; }
+    }
+
+    /* CTA */
+    .cta { padding: 5rem 0; background: var(--navy); color: var(--hero-fg); text-align: center; }
+    .cta h2 { color: var(--hero-fg); font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+    .cta p { color: var(--hero-muted); max-width: 540px; margin: 0 auto 2rem; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    /* Animations */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-right { opacity: 0; transform: translateX(30px); transition: opacity 0.6s, transform 0.6s; }
+    .fade-right.visible { opacity: 1; transform: translateX(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container navbar-inner">
+    <div class="navbar-brand">
+      Austin Dell'Abate
+      <small>Gavin Lending | NMLS #184155</small>
+    </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#services">Loan Programs</a>
+      <a href="#heroes">Resources</a>
+      <a href="#cta">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="tel:512-825-7007" class="nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        512-825-7007
+      </a>
+      <a href="https://apply.barrettfinancial.com/apply/austindellabate" class="btn btn-primary btn-sm">Apply Now</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#heroes" onclick="toggleMenu()">Resources</a>
+    <a href="#cta" onclick="toggleMenu()">Contact</a>
+    <a href="https://apply.barrettfinancial.com/apply/austindellabate" class="btn btn-primary btn-sm" style="margin-top:0.5rem;width:100%;justify-content:center;">Apply Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="/images/hero-bg.jpg" alt="" width="1920" height="1080" />
+  </div>
+  <div class="container hero-content">
+    <div class="hero-text fade-up">
+      <span class="badge badge-gold" style="margin-bottom:1.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        22 years of Excellence
+      </span>
+      <h1>Your Path to <span class="gold">Homeownership</span> Starts Here</h1>
+      <p>With 22 years of high-performance lending experience, I'm a Texas-born powerhouse in both residential and commercial mortgage strategy—delivering results where others deliver excuses.</p>
+      <div class="hero-buttons">
+        <a href="https://apply.barrettfinancial.com/apply/austindellabate" class="btn btn-primary">Apply Now <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="#cta" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+    <div class="fade-right" style="display:flex;justify-content:flex-end;">
+      <div class="profile-card">
+        <img src="/images/profile-photo.jpg" alt="Austin Dell'Abate" width="512" height="512" />
+        <h3>Austin Dell'Abate</h3>
+        <p class="subtitle">Producing Branch Manager</p>
+        <p class="subtitle" style="font-size:0.75rem;">Gavin Lending Powered by Barrett Financial LLC</p>
+        <p class="nmls">NMLS #184155</p>
+        <div class="profile-links">
+          <a href="tel:512-825-7007">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            512-825-7007
+          </a>
+          <a href="mailto:Austind@barrettfinancial.com">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Austind@barrettfinancial.com
+          </a>
+        </div>
+        <div class="profile-footer">
+          <p class="label">Proud Member</p>
+          <p class="heroes-badge">❤️ Homes for Heroes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card fade-up"><p class="value">$500M+</p><p class="label">Loans Funded</p></div>
+      <div class="stat-card fade-up"><p class="value">2,000+</p><p class="label">Happy Homeowners</p></div>
+      <div class="stat-card fade-up"><p class="value">22</p><p class="label">Years Experience</p></div>
+      <div class="stat-card fade-up"><p class="value">4.9</p><p class="label">Average Rating</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-label"><span class="badge badge-primary">Our Services</span></div>
+    <h2 class="section-title">Texas Mortgage Solutions</h2>
+    <p class="section-sub">Expert guidance for every step of your mortgage journey, from first-time homebuyers to seasoned investors.</p>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Residential Lending</h3>
+        <p>Expert guidance for purchasing your dream home with competitive rates and personalized service.</p>
+        <ul><li>First-time homebuyer programs</li><li>Conventional loans</li><li>Jumbo loans</li><li>Quick pre-approval process</li></ul>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></div>
+        <h3>Refinancing Solutions</h3>
+        <p>Lower your monthly payments, reduce interest rates, or access your home's equity.</p>
+        <ul><li>Rate and term refinancing</li><li>Cash-out refinancing</li><li>Streamline refinancing</li><li>No-cost refinance options</li></ul>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M8 10h.01M16 10h.01M12 14h.01M8 14h.01M16 14h.01"/></svg></div>
+        <h3>Commercial Lending</h3>
+        <p>Comprehensive commercial mortgage solutions for investors and business owners.</p>
+        <ul><li>Multi-family properties</li><li>Commercial real estate</li><li>Investment properties</li><li>Flexible terms available</li></ul>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>VA Loans</h3>
+        <p>Exclusive benefits for military heroes with zero down payment options and competitive rates.</p>
+        <ul><li>Zero down payment</li><li>No PMI required</li><li>Competitive interest rates</li><li>Flexible credit requirements</li></ul>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg></div>
+        <h3>FHA Loans</h3>
+        <p>Accessible homeownership with low down payment options backed by the Federal Housing Administration.</p>
+        <ul><li>Low down payment (3.5%)</li><li>Flexible credit scores</li><li>Gift funds allowed</li><li>Government-backed security</li></ul>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <h3>Investment Properties</h3>
+        <p>Build your real estate portfolio with specialized financing for investment and rental properties.</p>
+        <ul><li>Single and multi-family</li><li>Portfolio loans</li><li>Cash-out options</li><li>Expert investment advice</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE ME -->
+<section class="why" id="about">
+  <div class="container">
+    <div class="section-label"><span class="badge badge-primary">Why Choose Me</span></div>
+    <h2 class="section-title">Your Path to Homeownership</h2>
+    <p class="section-sub">We streamline the mortgage process to make buying your Texas home as smooth and stress-free as possible.</p>
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>22+ Years Experience</h3>
+        <p>Decades of proven success in Texas mortgage lending with deep market expertise.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>Fast Approvals</h3>
+        <p>Quick pre-approval process with rapid closing times to secure your dream home.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+        <h3>Homes for Heroes Member</h3>
+        <p>Dedicated to serving those who serve our community with exclusive benefits.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div>
+        <h3>Personalized Service</h3>
+        <p>Tailored solutions that fit your unique financial situation and goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOMES FOR HEROES -->
+<section class="heroes" id="heroes">
+  <div class="container">
+    <div class="section-label"><span class="badge badge-gold">❤️ Homes for Heroes</span></div>
+    <h2 class="section-title">Serving Those Who Serve</h2>
+    <p class="section-sub">As a proud Homes for Heroes affiliate, I'm committed to giving back to the heroes who protect and serve our communities.</p>
+    <div class="heroes-layout">
+      <div>
+        <div class="heroes-grid">
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p>Military & Veterans</p></div>
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><p>Firefighters</p></div>
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg><p>Law Enforcement</p></div>
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg><p>Healthcare Workers</p></div>
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><p>Teachers</p></div>
+          <div class="hero-type-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.667 12H2v8h5.667M7.667 12 12 2l4.333 10M7.667 12h8.666M16.333 12H22v8h-5.667M16.333 12 12 22 7.667 12"/></svg><p>EMS/Paramedics</p></div>
+        </div>
+        <div class="save-box">
+          <p class="amount">Save $3,000+</p>
+          <p>on Average when buying or selling your home through the Homes for Heroes program.</p>
+        </div>
+      </div>
+      <div class="heroes-image fade-right">
+        <img src="/images/happy-homeowners.jpg" alt="Happy homeowners" loading="lazy" width="1024" height="768" />
+        <div class="hero-benefits">
+          <p class="title">Hero Benefits Include:</p>
+          <p class="sub">Lender Credits • Agent Rebates • Closing Cost Assistance</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS CAROUSEL -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-label"><span class="badge badge-primary">Testimonials</span></div>
+    <h2 class="section-title">Real Texas Families, Real Results</h2>
+    <p class="section-sub">Don't just take my word for it. See what my clients have to say.</p>
+
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <div class="carousel-slide-inner">
+            <div class="testimonial-card">
+              <span class="type-badge">Conventional</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"Austin made our first home purchase incredibly smooth! His expertise and dedication helped us navigate the process with confidence. We couldn't have asked for a better mortgage professional."</blockquote>
+              <div class="testimonial-footer"><div><p class="name">Sarah &amp; Mike Johnson</p><p class="loc">Austin, TX</p></div><span class="time">2 months ago</span></div>
+            </div>
+            <div class="testimonial-card">
+              <span class="type-badge">Commercial</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"Working with Austin was a game-changer for our investment property purchase. His knowledge of commercial lending and quick turnaround time helped us secure the deal before the competition."</blockquote>
+              <div class="testimonial-footer"><div><p class="name">Robert Martinez</p><p class="loc">Round Rock, TX</p></div><span class="time">3 months ago</span></div>
+            </div>
+            <div class="testimonial-card">
+              <span class="type-badge">VA Loan</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"As a veteran, I appreciated Austin's understanding of VA loans. He went above and beyond to ensure I got the best rate and terms. True professional who cares about his clients!"</blockquote>
+              <div class="testimonial-footer"><div><p class="name">Jennifer Lee</p><p class="loc">Cedar Park, TX</p></div><span class="time">1 month ago</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <div class="carousel-slide-inner">
+            <div class="testimonial-card">
+              <span class="type-badge">Refinance</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"Austin helped us refinance our home and saved us over $400 a month. The process was fast and he kept us informed every step of the way. Highly recommend!"</blockquote>
+              <div class="testimonial-footer"><div><p class="name">David &amp; Lisa Chen</p><p class="loc">Pflugerville, TX</p></div><span class="time">2 weeks ago</span></div>
+            </div>
+            <div class="testimonial-card">
+              <span class="type-badge">FHA Loan</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"As first-time buyers with limited savings, Austin guided us through FHA options we didn't even know existed. We're now proud homeowners thanks to his patience and expertise."</blockquote>
+              <div class="testimonial-footer"><div><p class="name">Maria Gonzalez</p><p class="loc">San Marcos, TX</p></div><span class="time">3 weeks ago</span></div>
+            </div>
+            <div class="testimonial-card">
+              <span class="type-badge">Investment</span>
+              <div class="stars"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <blockquote>"Austin has financed four investment properties for me now. His speed and understanding of the investor mindset is unmatched. A true partner in building wealth through real estate."</blockquote>
+              <div class="testimonial-footer"><div><p class="name">James Thompson</p><p class="loc">Georgetown, TX</p></div><span class="time">1 month ago</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="moveCarousel(-1)" aria-label="Previous">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="carousel-dots" id="carouselDots">
+          <button class="carousel-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+          <button class="carousel-dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+        </div>
+        <button class="carousel-btn" onclick="moveCarousel(1)" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="container">
+    <h2>Ready to Make Your Texas Dream Home a Reality?</h2>
+    <p>Let's discuss your mortgage options and find the perfect solution for your needs.</p>
+    <div class="cta-buttons">
+      <a href="https://apply.barrettfinancial.com/apply/austindellabate" class="btn btn-primary">Start Your Application <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="tel:512-825-7007" class="btn btn-outline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Mobile menu toggle
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Carousel
+  var currentSlide = 0;
+  var totalSlides = 2;
+  var autoplayTimer;
+
+  function moveCarousel(dir) {
+    currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+    updateCarousel();
+    resetAutoplay();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+    resetAutoplay();
+  }
+
+  function updateCarousel() {
+    var track = document.getElementById('carouselTrack');
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    var dots = document.querySelectorAll('.carousel-dot');
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('active', i === currentSlide);
+    }
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(function() { moveCarousel(1); }, 6000);
+  }
+
+  // Start autoplay
+  autoplayTimer = setInterval(function() { moveCarousel(1); }, 6000);
+
+  // Scroll animations with IntersectionObserver
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up, .fade-right').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
+
+</body>
 </html>
