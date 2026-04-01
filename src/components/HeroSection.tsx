@@ -78,7 +78,7 @@ const HeroSection = () => {
 
             <div className="mt-5 pt-4 border-t border-border">
               <p className="text-xs text-muted-foreground">Proud Member</p>
-              <span className="inline-flex items-center gap-1 mt-1 text-sm font-semibold text-red-500">
+              <span className="inline-flex items-center gap-1 mt-1 text-sm font-semibold text-destructive">
                 ❤️ Homes for Heroes
               </span>
             </div>
