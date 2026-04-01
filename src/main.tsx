@@ -1,5 +1,2 @@
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-
-createRoot(document.getElementById("root")!).render(<App />);
+// Pure HTML+CSS+JS project - no React rendering needed
+// All content is in index.html
