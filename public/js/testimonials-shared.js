@@ -1,7 +1,15 @@
 (function () {
   'use strict';
 
-  var DATA_URL = '/public/data/testimonials.json';
+  var DATA_URL = (function () {
+    var s = document.currentScript;
+    if (s && s.src) {
+      try {
+        return new URL('../data/testimonials.json', s.src).href;
+      } catch (e) {}
+    }
+    return '/data/testimonials.json';
+  })();
   var loadPromise = null;
 
   function fetchTestimonials() {

@@ -1,6 +1,6 @@
 # homeownership
 
-Static marketing site for Austin Dell'Abate / Gavin Lending (Texas mortgage solutions).
+Static marketing site for Austin Dell'Abate — Gavin Lending Powered by Barrett Financial LLC.
 
 ## Development
 
