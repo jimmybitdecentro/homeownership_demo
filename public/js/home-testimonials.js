@@ -9,7 +9,7 @@
 
   function buildSlides($track, perSlide) {
     var list = window.TESTIMONIALS_DATA;
-    if (!list || !window.renderTestimonialCardHtml) return 0;
+    if (!list || !list.length || !window.renderTestimonialCardHtml) return 0;
     var slides = chunk(list, perSlide);
     $track.empty();
     slides.forEach(function (group, slideIdx) {
@@ -37,23 +37,27 @@
     var totalSlides = 0;
     var autoplayTimer;
     var perSlide = 3;
+    var started = false;
 
     function getPerSlide() {
       return window.innerWidth >= 900 ? 3 : 1;
     }
 
     function updateCarousel() {
+      if (totalSlides < 1) return;
       $track.css('transform', 'translateX(-' + currentSlide * 100 + '%)');
       $dots.find('.carousel-dot').removeClass('active').eq(currentSlide).addClass('active');
     }
 
     function moveCarousel(dir) {
+      if (totalSlides < 1) return;
       currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
       updateCarousel();
       resetAutoplay();
     }
 
     function goToSlide(i) {
+      if (totalSlides < 1) return;
       currentSlide = i;
       updateCarousel();
       resetAutoplay();
@@ -61,6 +65,7 @@
 
     function resetAutoplay() {
       clearInterval(autoplayTimer);
+      if (totalSlides < 2) return;
       autoplayTimer = setInterval(function () {
         moveCarousel(1);
       }, 6000);
@@ -90,23 +95,31 @@
       resetAutoplay();
     }
 
-    $prev.on('click', function () {
-      moveCarousel(-1);
-    });
-    $next.on('click', function () {
-      moveCarousel(1);
-    });
+    function bindAndRebuild() {
+      if (started) return;
+      started = true;
+      $prev.on('click', function () {
+        moveCarousel(-1);
+      });
+      $next.on('click', function () {
+        moveCarousel(1);
+      });
+      rebuild();
+      var resizeTimer;
+      $(window).on('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          var was = perSlide;
+          var now = getPerSlide();
+          if (was !== now) rebuild();
+        }, 200);
+      });
+    }
 
-    rebuild();
-
-    var resizeTimer;
-    $(window).on('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        var was = perSlide;
-        var now = getPerSlide();
-        if (was !== now) rebuild();
-      }, 200);
-    });
+    if (typeof window.ensureTestimonialsLoaded === 'function') {
+      window.ensureTestimonialsLoaded(bindAndRebuild);
+    } else {
+      bindAndRebuild();
+    }
   };
 })(jQuery);
