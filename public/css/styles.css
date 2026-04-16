@@ -395,3 +395,138 @@ ul { list-style: none; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 .fade-right { opacity: 0; transform: translateX(30px); transition: opacity 0.6s, transform 0.6s; }
 .fade-right.visible { opacity: 1; transform: translateX(0); }
+
+/* GAVIN LENDING PROFILE CARD */
+.gavin-card {
+  padding: 4rem 0;
+  background: #000510;
+}
+
+.gavin-card-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 2.75rem;
+  text-align: center;
+  border-radius: 1rem;
+  border: 1px solid #1e3a8a;
+  background: radial-gradient(circle at top, #020617 0, #000510 45%, #020617 100%);
+  color: #e5e7eb;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.7);
+}
+
+.gavin-avatar-wrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto 1.5rem;
+}
+
+.gavin-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #3b82f6;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.6);
+}
+
+.gavin-badge {
+  position: absolute;
+  top: 8px;
+  right: -12px;
+  width: 80px;
+  text-align: center;
+}
+
+.gavin-badge-icon {
+  width: 100%;
+}
+
+.gavin-badge-label {
+  margin-top: -0.5rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #3b82f6;
+}
+
+.gavin-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  background: linear-gradient(to right, #ffffff, #93c5fd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gavin-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: #cbd5e1;
+}
+
+.gavin-divider {
+  height: 1px;
+  margin: 1.75rem 0;
+  background: linear-gradient(to right, transparent, #3b82f6, transparent);
+}
+
+.gavin-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.gavin-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.gavin-phone a {
+  color: #f9fafb;
+  font-weight: 600;
+}
+
+.gavin-nmls-pill {
+  background: #1e3a8a;
+  padding: 0.3rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.gavin-location {
+  margin-top: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0.85;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.gavin-location-icon {
+  width: 26px;
+}
+
+@media (max-width: 600px) {
+  .gavin-card-inner {
+    padding: 2.2rem 1.5rem 2.4rem;
+  }
+
+  .gavin-avatar-wrap {
+    width: 220px;
+    height: 220px;
+  }
+
+  .gavin-title {
+    font-size: 2rem;
+  }
+}
